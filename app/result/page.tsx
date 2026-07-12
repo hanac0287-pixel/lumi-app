@@ -1,5 +1,7 @@
 "use client";
 
+import MoodCard from "@/components/result/MoodCard";
+import GiftCard from "@/components/result/GiftCard";
 import Header from "@/components/result/Header";
 import HeroCard from "@/components/result/HeroCard";
 
@@ -29,6 +31,10 @@ link.download = `LUMI_바다루미_${today}.png`;
         <Header onSave={downloadWallpaper} />
 
         <HeroCard />
+        
+
+<GiftCard onSave={downloadWallpaper} />
+<MoodCard />
 
       </div>
     </main>
