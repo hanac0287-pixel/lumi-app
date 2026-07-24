@@ -4,7 +4,7 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { questions } from "../data/questions";
-import { recommendMate } from "../lib/recommendation";
+import { recommend } from "../lib/recommendation";
 
 export default function UploadPage() {
   const router = useRouter();
@@ -24,13 +24,12 @@ export default function UploadPage() {
     const nextTags = [...selectedTags, ...option.tags];
 
     if (current === questions.length - 1) {
-      const mate = recommendMate(nextTags);
+      const result = recommend(nextTags);
 
-      sessionStorage.setItem("mate", JSON.stringify(mate));
-      sessionStorage.setItem("selectedTags", JSON.stringify(nextTags));
+sessionStorage.setItem("result", JSON.stringify(result));
 
-      router.push("/loading");
-      return;
+router.push("/loading");
+return;
     }
 
     setSelectedTags(nextTags);

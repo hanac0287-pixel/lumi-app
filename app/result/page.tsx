@@ -1,78 +1,51 @@
 "use client";
 
-import "swiper/css";
-import "swiper/css/pagination";
-
-import { Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import Header from "@/components/result/Header";
-import HeroCard from "@/components/result/HeroCard";
-import LetterCard from "@/components/result/LetterCard";
-import MoodCard from "@/components/result/MoodCard";
-import GiftCard from "@/components/result/GiftCard";
-import EndCard from "@/components/result/EndCard";
+import ResultLayout from "@/components/result/ResultLayout";
 
 export default function ResultPage() {
-  const downloadWallpaper = () => {
-    const link = document.createElement("a");
+  const result = {
+    lumiName: "바다 루미",
+    emoji: "🦊",
 
-    link.href = "/images/wallpapers/sea-lumi.png";
+    title: "오늘 당신을 찾아온 행운 메이트",
 
-    const today = new Date().toISOString().slice(0, 10);
+    subtitle:
+      "당신은 조용하지만 강한 에너지를 가진 사람입니다. 오늘은 주변 사람과의 연결에서 뜻밖의 행운이 시작될 수 있습니다.",
 
-    link.download = `LUMI_바다루미_${today}.png`;
+    mood: {
+      title: "오늘의 무드",
+      icon: "✨",
+      value: "Calm Energy",
+      description:
+        "무리하지 않아도 좋은 하루입니다. 자연스럽게 흘러가는 선택이 가장 좋은 결과를 가져옵니다.",
+    },
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    fortune: {
+      score: 92,
+      color: "#60A5FA",
+
+      money:
+        "지출보다 작은 수입의 기회가 들어옵니다.",
+
+      love:
+        "대화에서 좋은 인상을 남길 수 있습니다.",
+
+      work:
+        "작은 성과가 다음 기회를 연결합니다.",
+    },
+
+    wallpaper: {
+      image: "/wallpapers/sea-lumi.png",
+
+      title: "바다 루미",
+
+      theme: "Ocean",
+
+      downloadName: "Sea-LUMI",
+    },
   };
 
   return (
-    <main
-      className="h-screen overflow-hidden bg-cover bg-center"
-      style={{
-        backgroundImage:
-          "url('/images/backgrounds/result.png')",
-      }}
-    >
-      <div className="mx-auto flex h-full max-w-md flex-col px-4">
-
-        <Header onSave={downloadWallpaper} />
-
-        <div className="flex-1 overflow-hidden pb-4">
-
-          <Swiper
-            modules={[Pagination]}
-            pagination={{ clickable: true }}
-            spaceBetween={18}
-            className="h-full"
-          >
-            <SwiperSlide className="h-full">
-              <HeroCard />
-            </SwiperSlide>
-
-            <SwiperSlide className="h-full">
-              <LetterCard />
-            </SwiperSlide>
-
-            <SwiperSlide className="h-full">
-              <MoodCard />
-            </SwiperSlide>
-
-            <SwiperSlide className="h-full">
-              <GiftCard onSave={downloadWallpaper} />
-            </SwiperSlide>
-
-            <SwiperSlide className="h-full">
-              <EndCard />
-            </SwiperSlide>
-
-          </Swiper>
-
-        </div>
-
-      </div>
-    </main>
+    <ResultLayout result={result} />
   );
 }

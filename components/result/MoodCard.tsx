@@ -1,135 +1,108 @@
-export default function MoodCard() {
-  return (
-    <div className="h-full rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 flex flex-col">
+"use client";
 
+import { motion } from "framer-motion";
+
+interface MoodCardProps {
+  mood: {
+    title: string;
+    icon: string;
+    value: string;
+    description: string;
+  };
+}
+
+export default function MoodCard({ mood }: MoodCardProps) {
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 32 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.55 }}
+      className="rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden"
+    >
       {/* Header */}
+      <div className="bg-gradient-to-r from-sky-400 to-cyan-400 px-7 py-6 text-white">
+        <div className="flex items-center gap-3">
+          <div className="text-3xl">{mood.icon}</div>
 
-      <div className="text-center">
+          <div>
+            <p className="text-xs uppercase tracking-[0.25em] opacity-80">
+              AI Mood Analysis
+            </p>
 
-        <div className="text-5xl">
-          ✨
+            <h2 className="text-2xl font-bold">
+              {mood.title}
+            </h2>
+          </div>
+        </div>
+      </div>
+
+      {/* Body */}
+      <div className="p-7 space-y-8">
+        {/* Mood */}
+        <div className="text-center">
+          <div className="text-3xl font-black text-slate-800">
+            {mood.value}
+          </div>
+
+          <p className="mt-4 leading-8 text-slate-600">
+            {mood.description}
+          </p>
         </div>
 
-        <p className="mt-4 text-xs tracking-[0.35em] text-sky-500 font-semibold">
-          AI MOOD ANALYSIS
-        </p>
+        {/* Energy */}
+        <div>
+          <div className="flex justify-between text-sm font-semibold text-slate-600">
+            <span>오늘의 에너지</span>
+            <span>84%</span>
+          </div>
 
-        <h2 className="mt-2 text-3xl font-black text-gray-800">
-          오늘의 분위기
-        </h2>
-
-      </div>
-
-      {/* Score */}
-
-      <div className="mt-8 space-y-5">
-
-        <MoodBar
-          emoji="🌊"
-          title="차분함"
-          value={92}
-          color="bg-sky-400"
-        />
-
-        <MoodBar
-          emoji="☀️"
-          title="따뜻함"
-          value={87}
-          color="bg-orange-400"
-        />
-
-        <MoodBar
-          emoji="🍀"
-          title="행운"
-          value={81}
-          color="bg-emerald-400"
-        />
-
-      </div>
-
-      {/* Message */}
-
-      <div className="flex-1 flex items-center">
-
-        <div className="w-full rounded-3xl bg-gradient-to-r from-orange-50 to-sky-50 p-6">
-
-          <p className="text-sm uppercase tracking-[0.25em] text-gray-400">
-            TODAY'S MESSAGE
-          </p>
-
-          <p className="mt-4 text-xl leading-9 font-semibold text-gray-800">
-
-            오늘은
-            <span className="text-orange-500">
-              {" "}새로운 기회
-            </span>
-            가
-            <br />
-            가까이 다가오는 하루입니다.
-
-          </p>
-
-          <p className="mt-5 leading-8 text-gray-600">
-
-            조급하게 움직이기보다
-
-            <br />
-
-            평소처럼 차분하게 행동하면
-
-            <br />
-
-            좋은 흐름을 만날 가능성이 높습니다.
-
-          </p>
-
+          <div className="mt-3 h-3 rounded-full bg-slate-200 overflow-hidden">
+            <motion.div
+              initial={{ width: 0 }}
+              whileInView={{ width: "84%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1 }}
+              className="h-full rounded-full bg-gradient-to-r from-sky-400 to-cyan-400"
+            />
+          </div>
         </div>
 
+        {/* Keywords */}
+        <div>
+          <p className="mb-4 text-sm font-bold text-slate-500">
+            TODAY KEYWORDS
+          </p>
+
+          <div className="flex flex-wrap gap-3">
+            {[
+              "평온함",
+              "집중력",
+              "새로운 연결",
+            ].map((item) => (
+              <span
+                key={item}
+                className="rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-700"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* Recommendation */}
+        <div className="rounded-3xl bg-sky-50 p-5">
+          <p className="text-sm font-bold text-sky-700">
+            💡 오늘의 추천
+          </p>
+
+          <p className="mt-3 leading-7 text-slate-600">
+            중요한 결정을 서두르기보다 자연스럽게 흘러가는
+            상황을 받아들이는 것이 좋습니다.
+            예상하지 못한 연락이 새로운 기회가 될 수 있습니다.
+          </p>
+        </div>
       </div>
-
-    </div>
-  );
-}
-
-interface MoodBarProps {
-  emoji: string;
-  title: string;
-  value: number;
-  color: string;
-}
-
-function MoodBar({
-  emoji,
-  title,
-  value,
-  color,
-}: MoodBarProps) {
-  return (
-    <div>
-
-      <div className="mb-2 flex justify-between">
-
-        <span className="font-semibold text-gray-700">
-          {emoji} {title}
-        </span>
-
-        <span className="font-bold text-gray-800">
-          {value}%
-        </span>
-
-      </div>
-
-      <div className="h-3 rounded-full bg-gray-200 overflow-hidden">
-
-        <div
-          className={`${color} h-full rounded-full`}
-          style={{
-            width: `${value}%`,
-          }}
-        />
-
-      </div>
-
-    </div>
+    </motion.section>
   );
 }

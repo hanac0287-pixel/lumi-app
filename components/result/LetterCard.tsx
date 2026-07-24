@@ -1,8 +1,20 @@
-export default function LetterCard() {
-  return (
-    <div className="h-full rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 flex flex-col">
+"use client";
 
-      {/* 상단 */}
+import { Mate } from "@/app/data/mates";
+
+interface LetterCardProps {
+  mate: Mate;
+  intro: string;
+  insight: string;
+}
+
+export default function LetterCard({
+  mate,
+  intro,
+  insight,
+}: LetterCardProps) {
+  return (
+    <div className="flex h-full flex-col rounded-[34px] bg-white/90 p-8 shadow-2xl backdrop-blur-xl">
 
       <div className="text-center">
 
@@ -10,8 +22,8 @@ export default function LetterCard() {
           💌
         </div>
 
-        <p className="mt-4 text-xs tracking-[0.35em] text-orange-400 font-semibold">
-          LETTER FROM LUMI
+        <p className="mt-4 text-xs font-semibold tracking-[0.35em] text-orange-500">
+          LETTER
         </p>
 
         <h2 className="mt-2 text-3xl font-black text-gray-800">
@@ -20,53 +32,23 @@ export default function LetterCard() {
 
       </div>
 
-      {/* 편지 */}
+      <div className="mt-10 flex-1">
 
-      <div className="flex-1 flex items-center">
+        <p className="whitespace-pre-line text-lg leading-9 text-gray-700">
+          {intro}
 
-        <div className="w-full rounded-3xl bg-orange-50/70 border border-orange-100 p-6">
+          {"\n\n"}
 
-          <p className="leading-9 text-[17px] text-gray-700 whitespace-pre-line">
-
-{`안녕하세요.
-
-오늘은 조금 천천히
-걸어도 괜찮아요.
-
-늘 앞만 보고 달려온
-당신이기에,
-
-오늘만큼은
-잠시 쉬어가도 됩니다.
-
-당신은 이미
-충분히 잘하고 있습니다.
-
-오늘도
-루미가 곁에서
-응원할게요. 🍀`}
-
-          </p>
-
-        </div>
+          {insight}
+        </p>
 
       </div>
 
-      {/* 하단 */}
+      <div className="mt-8 border-t border-gray-100 pt-6 text-right">
 
-      <div className="pt-6 text-center">
-
-        <div className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-5 py-2">
-
-          <span>
-            🦊
-          </span>
-
-          <span className="font-semibold text-orange-600">
-            바다 루미
-          </span>
-
-        </div>
+        <p className="font-bold text-orange-500">
+          From. {mate.name}
+        </p>
 
       </div>
 

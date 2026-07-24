@@ -1,78 +1,93 @@
 "use client";
 
-import "swiper/css";
-import "swiper/css/pagination";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
-import { Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-
-import Header from "@/components/result/Header";
-import HeroCard from "@/components/result/HeroCard";
-import LetterCard from "@/components/result/LetterCard";
-import MoodCard from "@/components/result/MoodCard";
-import GiftCard from "@/components/result/GiftCard";
-import EndCard from "@/components/result/EndCard";
-
-export default function ResultPage() {
-  const downloadWallpaper = () => {
-    const link = document.createElement("a");
-
-    link.href = "/images/wallpapers/sea-lumi.png";
-
-    const today = new Date().toISOString().slice(0, 10);
-
-    link.download = `LUMI_바다루미_${today}.png`;
-
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+interface HeroCardProps {
+  result: {
+    lumiName: string;
+    emoji: string;
+    title: string;
+    subtitle: string;
   };
+}
 
+export default function HeroCard({
+  result,
+}: HeroCardProps) {
   return (
-    <main
-      className="h-screen overflow-hidden bg-cover bg-center"
-      style={{
-        backgroundImage:
-          "url('/images/backgrounds/result.png')",
+    <motion.section
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: 0.7,
       }}
+      className="relative overflow-hidden rounded-[36px] bg-white/70 backdrop-blur-xl shadow-2xl"
     >
-      <div className="mx-auto flex h-full max-w-md flex-col px-4">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-white to-cyan-100" />
 
-        <Header onSave={downloadWallpaper} />
+      {/* Blur */}
+      <div className="absolute -left-16 top-0 h-44 w-44 rounded-full bg-sky-300/30 blur-3xl" />
 
-        <div className="flex-1 overflow-hidden pb-4">
+      <div className="absolute right-0 bottom-0 h-52 w-52 rounded-full bg-cyan-200/40 blur-3xl" />
 
-          <Swiper
-            modules={[Pagination]}
-            pagination={{ clickable: true }}
-            spaceBetween={18}
-            className="h-full"
-          >
-            <SwiperSlide className="h-full">
-              <HeroCard />
-            </SwiperSlide>
+      <div className="relative px-8 pt-10 pb-12">
 
-            <SwiperSlide className="h-full">
-              <LetterCard />
-            </SwiperSlide>
+        {/* Emoji */}
+        <motion.div
+          animate={{
+            y: [0, -8, 0],
+          }}
+          transition={{
+            repeat: Infinity,
+            duration: 3,
+          }}
+          className="text-center text-7xl"
+        >
+          {result.emoji}
+        </motion.div>
 
-            <SwiperSlide className="h-full">
-              <MoodCard />
-            </SwiperSlide>
+        {/* Lumi */}
+        <motion.div
+          initial={{ scale: .8 }}
+          animate={{ scale: 1 }}
+          transition={{
+            delay: .2,
+          }}
+          className="mx-auto mt-8 h-64 w-64 relative"
+        >
+          <Image
+            src="/characters/sea-lumi.png"
+            alt={result.lumiName}
+            fill
+            priority
+            className="object-contain drop-shadow-2xl"
+          />
+        </motion.div>
 
-            <SwiperSlide className="h-full">
-              <GiftCard onSave={downloadWallpaper} />
-            </SwiperSlide>
+        {/* Name */}
+        <div className="mt-6 text-center">
 
-            <SwiperSlide className="h-full">
-              <EndCard />
-            </SwiperSlide>
+          <p className="text-sm tracking-[0.35em] uppercase text-sky-500 font-semibold">
+            LUMI MATE
+          </p>
 
-          </Swiper>
+          <h1 className="mt-2 text-4xl font-black text-slate-800">
+            {result.lumiName}
+          </h1>
+
+          <p className="mt-5 text-xl font-bold text-slate-700">
+            {result.title}
+          </p>
+
+          <p className="mt-4 leading-8 text-slate-600">
+            {result.subtitle}
+          </p>
 
         </div>
 
       </div>
-    </main>
+    </motion.section>
   );
 }
