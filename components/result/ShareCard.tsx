@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Share2, Link2, RotateCcw } from "lucide-react";
 import { useState } from "react";
 
@@ -36,12 +35,7 @@ export default function ShareCard() {
   };
 
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 35 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden"
-    >
+    <section className="rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden">
       <div className="bg-gradient-to-r from-emerald-500 to-cyan-500 px-7 py-6 text-white">
 
         <p className="text-xs tracking-[0.25em] uppercase opacity-80">
@@ -81,6 +75,6 @@ export default function ShareCard() {
         </button>
 
       </div>
-    </motion.section>
+    </section>
   );
 }

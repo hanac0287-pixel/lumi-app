@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Download, Check } from "lucide-react";
+import { downloadImage } from "@/app/lib/download";
 
 interface DownloadButtonProps {
   imageUrl: string;
@@ -19,37 +20,12 @@ export default function DownloadButton({
     try {
       setDownloading(true);
 
-      const response = await fetch(imageUrl);
-
-      if (!response.ok) {
-        throw new Error("Image download failed.");
-      }
-
-      const blob = await response.blob();
-
-      const url = window.URL.createObjectURL(blob);
-
-      const link = document.createElement("a");
-
       const today = new Date();
+      const defaultName = `LUMI-${today.getFullYear()}-${String(
+        today.getMonth() + 1
+      ).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}.png`;
 
-      const defaultName =
-        `LUMI-${today.getFullYear()}-${
-          String(today.getMonth() + 1).padStart(2, "0")
-        }-${
-          String(today.getDate()).padStart(2, "0")
-        }.png`;
-
-      link.href = url;
-      link.download = fileName ?? defaultName;
-
-      document.body.appendChild(link);
-
-      link.click();
-
-      link.remove();
-
-      window.URL.revokeObjectURL(url);
+      await downloadImage(imageUrl, fileName ?? defaultName);
 
       setCompleted(true);
 

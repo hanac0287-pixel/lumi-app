@@ -8,7 +8,13 @@ export interface Mate {
   title: string;
   description: string;
 
-  wallpaper: string;
+  // 캐릭터 일러스트 (idle 포즈). 아직 그림이 없는 메이트는 비워두면
+  // 화면에서 emoji로 대체 표시됩니다.
+  image?: string;
+
+  // 휴대폰 배경화면용 이미지. 아직 없는 메이트는 비워두면
+  // "곧 준비돼요" 안내로 대체 표시됩니다.
+  wallpaper?: string;
 
   // 질문 점수
   tags: Record<string, number>;
@@ -30,7 +36,8 @@ export const mates: Mate[] = [
 
     description: "새로운 시작을 응원하는 메이트",
 
-    wallpaper: "/wallpapers/lumi.jpg",
+    image: "/images/mates/lumi/idle.png",
+    wallpaper: "/images/wallpapers/camping-lumi.png",
 
     tags: {
       희망: 5,
@@ -58,7 +65,8 @@ export const mates: Mate[] = [
 
     description: "천천히 회복하도록 도와주는 메이트",
 
-    wallpaper: "/wallpapers/momo.jpg",
+    // TODO: /public/images/mates/momo/idle.png 추가되면 image 채워주세요.
+    wallpaper: "/images/wallpapers/camping-momo.png",
 
     tags: {
       휴식: 5,
@@ -85,7 +93,9 @@ export const mates: Mate[] = [
 
     description: "작은 행복을 발견하게 도와주는 메이트",
 
-    wallpaper: "/wallpapers/bobo.jpg",
+    // TODO: /public/images/mates/bobo/idle.png, /public/images/wallpapers/bobo.png 추가 후 채워주세요.
+    // image: "/images/mates/bobo/idle.png",
+    // wallpaper: "/images/wallpapers/bobo.png",
 
     tags: {
       행복: 5,
@@ -112,7 +122,9 @@ export const mates: Mate[] = [
 
     description: "한 걸음을 내딛도록 응원하는 메이트",
 
-    wallpaper: "/wallpapers/luna.jpg",
+    // TODO: /public/images/mates/luna/idle.png, /public/images/wallpapers/luna.png 추가 후 채워주세요.
+    // image: "/images/mates/luna/idle.png",
+    // wallpaper: "/images/wallpapers/luna.png",
 
     tags: {
       희망: 5,
@@ -139,7 +151,9 @@ export const mates: Mate[] = [
 
     description: "생각을 정리하도록 도와주는 메이트",
 
-    wallpaper: "/wallpapers/oli.jpg",
+    // TODO: /public/images/mates/oli/idle.png, /public/images/wallpapers/oli.png 추가 후 채워주세요.
+    // image: "/images/mates/oli/idle.png",
+    // wallpaper: "/images/wallpapers/oli.png",
 
     tags: {
       사색: 5,
@@ -166,7 +180,9 @@ export const mates: Mate[] = [
 
     description: "새로운 발견을 좋아하는 메이트",
 
-    wallpaper: "/wallpapers/mio.jpg",
+    // TODO: /public/images/mates/mio/idle.png, /public/images/wallpapers/mio.png 추가 후 채워주세요.
+    // image: "/images/mates/mio/idle.png",
+    // wallpaper: "/images/wallpapers/mio.png",
 
     tags: {
       행운: 5,
