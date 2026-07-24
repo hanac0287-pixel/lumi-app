@@ -1,51 +1,63 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import ResultLayout from "@/components/result/ResultLayout";
+import { RecommendationResult } from "@/app/lib/recommendation";
 
 export default function ResultPage() {
-  const result = {
-    lumiName: "바다 루미",
-    emoji: "🦊",
+  const router = useRouter();
+  const [result, setResult] = useState<RecommendationResult | null>(null);
+  const [notFound, setNotFound] = useState(false);
 
-    title: "오늘 당신을 찾아온 행운 메이트",
+  useEffect(() => {
+    const raw = sessionStorage.getItem("result");
 
-    subtitle:
-      "당신은 조용하지만 강한 에너지를 가진 사람입니다. 오늘은 주변 사람과의 연결에서 뜻밖의 행운이 시작될 수 있습니다.",
+    if (!raw) {
+      setNotFound(true);
+      return;
+    }
 
-    mood: {
-      title: "오늘의 무드",
-      icon: "✨",
-      value: "Calm Energy",
-      description:
-        "무리하지 않아도 좋은 하루입니다. 자연스럽게 흘러가는 선택이 가장 좋은 결과를 가져옵니다.",
-    },
+    try {
+      setResult(JSON.parse(raw) as RecommendationResult);
+    } catch (e) {
+      console.error("결과 데이터를 읽지 못했습니다.", e);
+      setNotFound(true);
+    }
+  }, []);
 
-    fortune: {
-      score: 92,
-      color: "#60A5FA",
+  useEffect(() => {
+    if (!notFound) return;
 
-      money:
-        "지출보다 작은 수입의 기회가 들어옵니다.",
+    const timer = setTimeout(() => {
+      router.replace("/");
+    }, 1500);
 
-      love:
-        "대화에서 좋은 인상을 남길 수 있습니다.",
+    return () => clearTimeout(timer);
+  }, [notFound, router]);
 
-      work:
-        "작은 성과가 다음 기회를 연결합니다.",
-    },
+  if (notFound) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-orange-50 via-amber-50 to-white px-6 text-center">
+        <div>
+          <p className="text-lg font-bold text-gray-700">
+            테스트 결과를 찾을 수 없어요.
+          </p>
+          <p className="mt-2 text-sm text-gray-500">
+            잠시 후 홈으로 이동합니다.
+          </p>
+        </div>
+      </main>
+    );
+  }
 
-    wallpaper: {
-      image: "/wallpapers/sea-lumi.png",
+  if (!result) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-orange-50 via-amber-50 to-white">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-orange-400 border-t-transparent" />
+      </main>
+    );
+  }
 
-      title: "바다 루미",
-
-      theme: "Ocean",
-
-      downloadName: "Sea-LUMI",
-    },
-  };
-
-  return (
-    <ResultLayout result={result} />
-  );
+  return <ResultLayout result={result} />;
 }

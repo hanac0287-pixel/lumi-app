@@ -5,16 +5,17 @@ import Image from "next/image";
 
 interface HeaderProps {
   onSave: () => void;
+  onBack?: () => void;
 }
 
-export default function Header({ onSave }: HeaderProps) {
+export default function Header({ onSave, onBack }: HeaderProps) {
   const router = useRouter();
 
   return (
     <header className="flex items-center justify-between py-4">
       {/* 뒤로가기 */}
       <button
-        onClick={() => router.back()}
+        onClick={onBack ?? (() => router.back())}
         className="w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-105 transition"
       >
         <Image
