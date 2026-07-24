@@ -1,74 +1,135 @@
-import Image from "next/image";
-
-interface GiftCardProps {
-  onSave: () => void;
-}
-
-export default function GiftCard({ onSave }: GiftCardProps) {
+export default function MoodCard() {
   return (
-    <section className="mt-8">
+    <div className="h-full rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 flex flex-col">
 
-      <div className="rounded-[32px] bg-white shadow-xl p-7">
+      {/* Header */}
 
-        <div className="flex items-center gap-3">
+      <div className="text-center">
 
-          <div className="w-14 h-14 rounded-full bg-orange-100 flex items-center justify-center text-3xl">
-            🎁
-          </div>
-
-          <div>
-
-            <p className="text-sm text-gray-400">
-              TODAY'S GIFT
-            </p>
-
-            <h3 className="text-2xl font-bold text-gray-800">
-              루미가 준비한 선물
-            </h3>
-
-          </div>
-
+        <div className="text-5xl">
+          ✨
         </div>
 
-        <p className="mt-5 text-gray-600 leading-8">
-          오늘 하루도 당신을 응원할 수 있도록
-          <br />
-          특별한 휴대폰 배경화면을 준비했어요.
+        <p className="mt-4 text-xs tracking-[0.35em] text-sky-500 font-semibold">
+          AI MOOD ANALYSIS
         </p>
 
-        {/* 미리보기 */}
-
-        <div className="mt-8 flex justify-center">
-
-          <div className="w-[150px] rounded-[24px] overflow-hidden shadow-xl border-4 border-orange-100">
-
-            <Image
-              src="/images/wallpapers/sea-lumi.png"
-              alt="Wallpaper"
-              width={1080}
-              height={1920}
-              className="w-full h-auto"
-            />
-
-          </div>
-
-        </div>
-
-        <button
-          onClick={onSave}
-          className="mt-8 w-full rounded-full bg-orange-500 py-4 text-lg font-bold text-white shadow-lg transition hover:scale-105"
-        >
-          📥 배경화면 저장하기
-        </button>
-
-        <p className="mt-5 text-center text-sm text-gray-400">
-          저장해서 오늘 하루
-          <br />
-          루미와 함께해 보세요.
-        </p>
+        <h2 className="mt-2 text-3xl font-black text-gray-800">
+          오늘의 분위기
+        </h2>
 
       </div>
 
-    </section>
+      {/* Score */}
+
+      <div className="mt-8 space-y-5">
+
+        <MoodBar
+          emoji="🌊"
+          title="차분함"
+          value={92}
+          color="bg-sky-400"
+        />
+
+        <MoodBar
+          emoji="☀️"
+          title="따뜻함"
+          value={87}
+          color="bg-orange-400"
+        />
+
+        <MoodBar
+          emoji="🍀"
+          title="행운"
+          value={81}
+          color="bg-emerald-400"
+        />
+
+      </div>
+
+      {/* Message */}
+
+      <div className="flex-1 flex items-center">
+
+        <div className="w-full rounded-3xl bg-gradient-to-r from-orange-50 to-sky-50 p-6">
+
+          <p className="text-sm uppercase tracking-[0.25em] text-gray-400">
+            TODAY'S MESSAGE
+          </p>
+
+          <p className="mt-4 text-xl leading-9 font-semibold text-gray-800">
+
+            오늘은
+            <span className="text-orange-500">
+              {" "}새로운 기회
+            </span>
+            가
+            <br />
+            가까이 다가오는 하루입니다.
+
+          </p>
+
+          <p className="mt-5 leading-8 text-gray-600">
+
+            조급하게 움직이기보다
+
+            <br />
+
+            평소처럼 차분하게 행동하면
+
+            <br />
+
+            좋은 흐름을 만날 가능성이 높습니다.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+interface MoodBarProps {
+  emoji: string;
+  title: string;
+  value: number;
+  color: string;
+}
+
+function MoodBar({
+  emoji,
+  title,
+  value,
+  color,
+}: MoodBarProps) {
+  return (
+    <div>
+
+      <div className="mb-2 flex justify-between">
+
+        <span className="font-semibold text-gray-700">
+          {emoji} {title}
+        </span>
+
+        <span className="font-bold text-gray-800">
+          {value}%
+        </span>
+
+      </div>
+
+      <div className="h-3 rounded-full bg-gray-200 overflow-hidden">
+
+        <div
+          className={`${color} h-full rounded-full`}
+          style={{
+            width: `${value}%`,
+          }}
+        />
+
+      </div>
+
+    </div>
   );
 }

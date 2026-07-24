@@ -30,42 +30,47 @@ export default function ResultPage() {
 
   return (
     <main
-      className="min-h-screen bg-cover bg-center px-4 py-6"
+      className="h-screen overflow-hidden bg-cover bg-center"
       style={{
         backgroundImage:
           "url('/images/backgrounds/result.png')",
       }}
     >
-      <div className="mx-auto max-w-md">
+      <div className="mx-auto flex h-full max-w-md flex-col px-4">
 
         <Header onSave={downloadWallpaper} />
 
-        <Swiper
-          modules={[Pagination]}
-          pagination={{ clickable: true }}
-          spaceBetween={20}
-        >
-          <SwiperSlide>
-            <HeroCard />
-          </SwiperSlide>
+        <div className="flex-1 overflow-hidden pb-4">
 
-          <SwiperSlide>
-            <LetterCard />
-          </SwiperSlide>
+          <Swiper
+            modules={[Pagination]}
+            pagination={{ clickable: true }}
+            spaceBetween={18}
+            className="h-full"
+          >
+            <SwiperSlide className="h-full">
+              <HeroCard />
+            </SwiperSlide>
 
-          <SwiperSlide>
-            <MoodCard />
-          </SwiperSlide>
+            <SwiperSlide className="h-full">
+              <LetterCard />
+            </SwiperSlide>
 
-          <SwiperSlide>
-            <GiftCard onSave={downloadWallpaper} />
-          </SwiperSlide>
+            <SwiperSlide className="h-full">
+              <MoodCard />
+            </SwiperSlide>
 
-          <SwiperSlide>
-            <EndCard />
-          </SwiperSlide>
+            <SwiperSlide className="h-full">
+              <GiftCard onSave={downloadWallpaper} />
+            </SwiperSlide>
 
-        </Swiper>
+            <SwiperSlide className="h-full">
+              <EndCard />
+            </SwiperSlide>
+
+          </Swiper>
+
+        </div>
 
       </div>
     </main>

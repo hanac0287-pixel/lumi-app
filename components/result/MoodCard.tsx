@@ -1,84 +1,135 @@
 export default function MoodCard() {
-    return (
-      <section className="mt-8">
-  
-        <div className="rounded-[32px] bg-white shadow-xl p-7">
-  
-          {/* 제목 */}
-  
-          <div className="flex items-center gap-3">
-  
-            <div className="w-14 h-14 rounded-full bg-sky-100 flex items-center justify-center text-3xl">
-              ✨
-            </div>
-  
-            <div>
-  
-              <p className="text-sm text-gray-400">
-                TODAY'S MOOD
-              </p>
-  
-              <h3 className="text-2xl font-bold text-gray-800">
-                오늘 사진에서 느껴진 분위기
-              </h3>
-  
-            </div>
-  
-          </div>
-  
-          {/* 설명 */}
-  
-          <p className="mt-5 text-gray-500 leading-8">
-            사진을 보며 느껴진 오늘의 분위기예요.
-            <br />
-            정답이 아닌, 오늘의 당신을 응원하기 위한 작은 힌트입니다.
-          </p>
-  
-          {/* 태그 */}
-  
-          <div className="mt-8 flex flex-wrap gap-3">
-  
-            <span className="rounded-full bg-sky-100 px-5 py-3 text-sky-700 font-semibold">
-              🌊 차분함
-            </span>
-  
-            <span className="rounded-full bg-orange-100 px-5 py-3 text-orange-700 font-semibold">
-              ☀️ 따뜻함
-            </span>
-  
-            <span className="rounded-full bg-emerald-100 px-5 py-3 text-emerald-700 font-semibold">
-              🍀 여유
-            </span>
-  
-            <span className="rounded-full bg-violet-100 px-5 py-3 text-violet-700 font-semibold">
-              ✨ 새로운 시작
-            </span>
-  
-          </div>
-  
-          {/* 메시지 */}
-  
-          <div className="mt-8 rounded-2xl bg-orange-50 p-5">
-  
-            <p className="leading-8 text-gray-700">
-  
-              오늘의 사진에서는
-              <strong className="text-orange-500">
-                {" "}편안함과 따뜻함
-              </strong>
-              이 먼저 느껴졌어요.
-  
-              <br /><br />
-  
-              하지만 새로운 시작을 앞둔 지금은
-              조금 더 자신감을 가져도 괜찮은 하루입니다.
-  
-            </p>
-  
-          </div>
-  
+  return (
+    <div className="h-full rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 flex flex-col">
+
+      {/* Header */}
+
+      <div className="text-center">
+
+        <div className="text-5xl">
+          ✨
         </div>
-  
-      </section>
-    );
-  }
+
+        <p className="mt-4 text-xs tracking-[0.35em] text-sky-500 font-semibold">
+          AI MOOD ANALYSIS
+        </p>
+
+        <h2 className="mt-2 text-3xl font-black text-gray-800">
+          오늘의 분위기
+        </h2>
+
+      </div>
+
+      {/* Score */}
+
+      <div className="mt-8 space-y-5">
+
+        <MoodBar
+          emoji="🌊"
+          title="차분함"
+          value={92}
+          color="bg-sky-400"
+        />
+
+        <MoodBar
+          emoji="☀️"
+          title="따뜻함"
+          value={87}
+          color="bg-orange-400"
+        />
+
+        <MoodBar
+          emoji="🍀"
+          title="행운"
+          value={81}
+          color="bg-emerald-400"
+        />
+
+      </div>
+
+      {/* Message */}
+
+      <div className="flex-1 flex items-center">
+
+        <div className="w-full rounded-3xl bg-gradient-to-r from-orange-50 to-sky-50 p-6">
+
+          <p className="text-sm uppercase tracking-[0.25em] text-gray-400">
+            TODAY'S MESSAGE
+          </p>
+
+          <p className="mt-4 text-xl leading-9 font-semibold text-gray-800">
+
+            오늘은
+            <span className="text-orange-500">
+              {" "}새로운 기회
+            </span>
+            가
+            <br />
+            가까이 다가오는 하루입니다.
+
+          </p>
+
+          <p className="mt-5 leading-8 text-gray-600">
+
+            조급하게 움직이기보다
+
+            <br />
+
+            평소처럼 차분하게 행동하면
+
+            <br />
+
+            좋은 흐름을 만날 가능성이 높습니다.
+
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+  );
+}
+
+interface MoodBarProps {
+  emoji: string;
+  title: string;
+  value: number;
+  color: string;
+}
+
+function MoodBar({
+  emoji,
+  title,
+  value,
+  color,
+}: MoodBarProps) {
+  return (
+    <div>
+
+      <div className="mb-2 flex justify-between">
+
+        <span className="font-semibold text-gray-700">
+          {emoji} {title}
+        </span>
+
+        <span className="font-bold text-gray-800">
+          {value}%
+        </span>
+
+      </div>
+
+      <div className="h-3 rounded-full bg-gray-200 overflow-hidden">
+
+        <div
+          className={`${color} h-full rounded-full`}
+          style={{
+            width: `${value}%`,
+          }}
+        />
+
+      </div>
+
+    </div>
+  );
+}
