@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
@@ -7,6 +8,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import { RecommendationResult } from "@/app/lib/recommendation";
+import { pickWallpaper } from "@/app/data/mates";
 import { downloadImage } from "@/app/lib/download";
 import Header from "./Header";
 import LetterCard from "./LetterCard";
@@ -22,14 +24,18 @@ interface ResultLayoutProps {
 export default function ResultLayout({ result }: ResultLayoutProps) {
   const { mate, mission, intro, insight, missionIntro } = result;
 
+  // 메이트당 배경화면이 여러 장일 수 있으니, 이번 결과에서 보여줄 한 장을
+  // 세션 동안 고정되도록 한 번만 랜덤으로 뽑아요.
+  const [wallpaper] = useState(() => pickWallpaper(mate));
+
   const handleSave = async () => {
-    if (!mate.wallpaper) {
+    if (!wallpaper) {
       alert(`${mate.name}의 배경화면은 아직 준비 중이에요.`);
       return;
     }
 
     try {
-      await downloadImage(mate.wallpaper, `LUMI-${mate.id}.png`);
+      await downloadImage(wallpaper, `LUMI-${mate.id}.png`);
     } catch (e) {
       console.error(e);
       alert("다운로드에 실패했습니다.");
@@ -44,7 +50,7 @@ export default function ResultLayout({ result }: ResultLayoutProps) {
       missionIntro={missionIntro}
       mission={mission}
     />,
-    <GiftCard key="gift" mate={mate} />,
+    <GiftCard key="gift" mate={mate} wallpaper={wallpaper} />,
     <ShareCard key="share" />,
     <EndCard key="end" />,
   ];
