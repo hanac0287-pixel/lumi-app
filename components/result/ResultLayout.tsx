@@ -56,7 +56,10 @@ export default function ResultLayout({ result }: ResultLayoutProps) {
   ];
 
   return (
-    <div className="flex h-[100dvh] w-full flex-col overflow-hidden bg-gradient-to-b from-orange-50 via-amber-50 to-white">
+    <div
+      className="flex h-[100dvh] w-full flex-col overflow-hidden bg-gradient-to-b from-orange-50 via-amber-50 to-white"
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
+    >
       <div className="mx-auto w-full max-w-md px-5">
         <Header onSave={handleSave} onBack={() => (window.location.href = "/")} />
       </div>
@@ -102,7 +105,7 @@ export default function ResultLayout({ result }: ResultLayoutProps) {
 
 function MateIntroSlide({ mate }: { mate: RecommendationResult["mate"] }) {
   return (
-    <div className="flex h-full flex-col justify-center rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 text-center">
+    <div className="flex h-full flex-col justify-center rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 text-center overflow-y-auto">
       {mate.image ? (
         <div className="relative mx-auto h-40 w-40">
           <Image

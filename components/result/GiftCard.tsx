@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { Mate } from "@/app/data/mates";
 import DownloadButton from "./DownloadButton";
@@ -10,6 +11,9 @@ interface GiftCardProps {
 }
 
 export default function GiftCard({ mate, wallpaper }: GiftCardProps) {
+  const [imageFailed, setImageFailed] = useState(false);
+  const showImage = wallpaper && !imageFailed;
+
   return (
     <div className="flex h-full flex-col rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-6">
 
@@ -28,7 +32,7 @@ export default function GiftCard({ mate, wallpaper }: GiftCardProps) {
 
       {/* 중간: 남는 공간을 다 차지하되, 넘치면 알아서 줄어듦 (min-h-0가 핵심) */}
       <div className="my-4 min-h-0 flex-1">
-        {wallpaper ? (
+        {showImage ? (
           <div className="relative mx-auto h-full w-full max-w-[220px]">
             <Image
               src={wallpaper}
@@ -37,6 +41,7 @@ export default function GiftCard({ mate, wallpaper }: GiftCardProps) {
               priority
               sizes="220px"
               className="rounded-3xl object-cover shadow-xl"
+              onError={() => setImageFailed(true)}
             />
           </div>
         ) : (

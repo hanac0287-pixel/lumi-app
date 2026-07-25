@@ -35,9 +35,8 @@ export default function ShareCard() {
   };
 
   return (
-    <section className="rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl overflow-hidden">
-      <div className="bg-gradient-to-r from-emerald-500 to-cyan-500 px-7 py-6 text-white">
-
+    <section className="flex h-full flex-col overflow-hidden rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl">
+      <div className="shrink-0 bg-gradient-to-r from-emerald-500 to-cyan-500 px-7 py-6 text-white">
         <p className="text-xs tracking-[0.25em] uppercase opacity-80">
           Share Result
         </p>
@@ -45,11 +44,10 @@ export default function ShareCard() {
         <h2 className="mt-2 text-2xl font-bold">
           행운을 친구와 공유해보세요
         </h2>
-
       </div>
 
-      <div className="p-7 space-y-4">
-
+      {/* 남는 공간을 다 차지해서, 다른 카드들과 높이가 똑같이 맞춰져요 */}
+      <div className="flex flex-1 flex-col justify-center gap-4 p-7">
         <button
           onClick={share}
           className="w-full rounded-2xl bg-sky-500 py-4 text-white font-bold flex justify-center items-center gap-3 hover:bg-sky-600 transition"
@@ -73,7 +71,6 @@ export default function ShareCard() {
           <RotateCcw size={20} />
           다시 테스트하기
         </button>
-
       </div>
     </section>
   );
