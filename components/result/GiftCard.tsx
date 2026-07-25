@@ -6,14 +6,17 @@ import DownloadButton from "./DownloadButton";
 
 interface GiftCardProps {
   mate: Mate;
+  wallpaper?: string;
 }
 
-export default function GiftCard({ mate }: GiftCardProps) {
+export default function GiftCard({
+  mate,
+  wallpaper,
+}: GiftCardProps) {
   return (
-    <div className="h-full rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 flex flex-col">
+    <div className="rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 flex flex-col">
 
       <div className="text-center">
-
         <div className="text-5xl">
           🎁
         </div>
@@ -25,13 +28,12 @@ export default function GiftCard({ mate }: GiftCardProps) {
         <h2 className="mt-2 text-3xl font-black text-gray-800">
           오늘의 선물
         </h2>
-
       </div>
 
       <div className="mt-8 flex flex-1 items-center justify-center">
-        {mate.wallpaper ? (
+        {wallpaper ? (
           <Image
-            src={mate.wallpaper}
+            src={wallpaper}
             alt={mate.name}
             width={250}
             height={500}
@@ -41,6 +43,7 @@ export default function GiftCard({ mate }: GiftCardProps) {
         ) : (
           <div className="flex h-[320px] w-[220px] flex-col items-center justify-center rounded-3xl bg-orange-50 text-center px-4">
             <div className="text-5xl">{mate.emoji}</div>
+
             <p className="mt-4 font-semibold text-orange-500">
               {mate.name}의 배경화면은
               <br />
@@ -51,9 +54,9 @@ export default function GiftCard({ mate }: GiftCardProps) {
       </div>
 
       <div className="mt-8">
-        {mate.wallpaper ? (
+        {wallpaper ? (
           <DownloadButton
-            imageUrl={mate.wallpaper}
+            imageUrl={wallpaper}
             fileName={`LUMI-${mate.id}.png`}
           />
         ) : (

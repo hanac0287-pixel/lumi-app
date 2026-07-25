@@ -8,21 +8,11 @@ export interface Mate {
   title: string;
   description: string;
 
-  // 캐릭터 일러스트 (idle 포즈). 아직 그림이 없는 메이트는 비워두면
-  // 화면에서 emoji로 대체 표시됩니다.
   image?: string;
+  wallpapers?: string[];
 
-  // 휴대폰 배경화면용 이미지. 아직 없는 메이트는 비워두면
-  // "곧 준비돼요" 안내로 대체 표시됩니다.
-  wallpaper?: string;
-
-  // 질문 점수
   tags: Record<string, number>;
-
-  // 대표 성향
   moods: string[];
-
-  // 잘 어울리는 미션
   favoriteMissionCategories: MissionCategory[];
 }
 
@@ -31,13 +21,14 @@ export const mates: Mate[] = [
     id: "lumi",
     name: "루미",
     emoji: "🦊",
-
     title: "햇살 메이트",
-
     description: "새로운 시작을 응원하는 메이트",
 
     image: "/images/mates/lumi/idle.png",
-    wallpaper: "/images/wallpapers/camping-lumi.png",
+    wallpapers: [
+      "/images/wallpapers/camping-lumi.png",
+      "/images/wallpapers/sea-lumi.png",
+    ],
 
     tags: {
       희망: 5,
@@ -50,24 +41,19 @@ export const mates: Mate[] = [
     },
 
     moods: ["challenge", "positive"],
-
-    favoriteMissionCategories: [
-      "walk",
-      "discover",
-    ],
+    favoriteMissionCategories: ["walk", "discover"],
   },
 
   {
     id: "momo",
     name: "모모",
     emoji: "🐻",
-
     title: "쉼표 메이트",
-
     description: "천천히 회복하도록 도와주는 메이트",
 
-    // TODO: /public/images/mates/momo/idle.png 추가되면 image 채워주세요.
-    wallpaper: "/images/wallpapers/camping-momo.png",
+    wallpapers: [
+      "/images/wallpapers/camping-momo.png",
+    ],
 
     tags: {
       휴식: 5,
@@ -78,25 +64,21 @@ export const mates: Mate[] = [
     },
 
     moods: ["burnout", "sensitive"],
-
-    favoriteMissionCategories: [
-      "rest",
-      "drink",
-    ],
+    favoriteMissionCategories: ["rest", "drink"],
   },
 
   {
     id: "bobo",
     name: "보보",
     emoji: "🦦",
-
     title: "행복 메이트",
-
     description: "작은 행복을 발견하게 도와주는 메이트",
 
-    // TODO: /public/images/mates/bobo/idle.png, /public/images/wallpapers/bobo.png 추가 후 채워주세요.
-    // image: "/images/mates/bobo/idle.png",
-    // wallpaper: "/images/wallpapers/bobo.png",
+    wallpapers: [
+      "/images/wallpapers/camping-bobo.png",
+      "/images/wallpapers/fall-bobo.png",
+      "/images/wallpapers/fall-couple-bobo.png",
+    ],
 
     tags: {
       행복: 5,
@@ -108,25 +90,20 @@ export const mates: Mate[] = [
     },
 
     moods: ["positive", "stable"],
-
-    favoriteMissionCategories: [
-      "discover",
-      "connect",
-    ],
+    favoriteMissionCategories: ["discover", "connect"],
   },
 
   {
     id: "luna",
     name: "루나",
     emoji: "🐰",
-
     title: "용기 메이트",
-
     description: "한 걸음을 내딛도록 응원하는 메이트",
 
-    // TODO: /public/images/mates/luna/idle.png, /public/images/wallpapers/luna.png 추가 후 채워주세요.
-    // image: "/images/mates/luna/idle.png",
-    // wallpaper: "/images/wallpapers/luna.png",
+    wallpapers: [
+      "/images/wallpapers/luna.png",
+      "/images/wallpapers/sea-luna.png",
+    ],
 
     tags: {
       희망: 5,
@@ -137,25 +114,15 @@ export const mates: Mate[] = [
     },
 
     moods: ["challenge"],
-
-    favoriteMissionCategories: [
-      "walk",
-      "discover",
-    ],
+    favoriteMissionCategories: ["walk", "discover"],
   },
 
   {
     id: "oli",
     name: "올리",
     emoji: "🦉",
-
     title: "생각 메이트",
-
     description: "생각을 정리하도록 도와주는 메이트",
-
-    // TODO: /public/images/mates/oli/idle.png, /public/images/wallpapers/oli.png 추가 후 채워주세요.
-    // image: "/images/mates/oli/idle.png",
-    // wallpaper: "/images/wallpapers/oli.png",
 
     tags: {
       사색: 5,
@@ -166,25 +133,15 @@ export const mates: Mate[] = [
     },
 
     moods: ["overthinking"],
-
-    favoriteMissionCategories: [
-      "observe",
-      "listen",
-    ],
+    favoriteMissionCategories: ["observe", "listen"],
   },
 
   {
     id: "mio",
     name: "미오",
     emoji: "🐱",
-
     title: "행운 메이트",
-
     description: "새로운 발견을 좋아하는 메이트",
-
-    // TODO: /public/images/mates/mio/idle.png, /public/images/wallpapers/mio.png 추가 후 채워주세요.
-    // image: "/images/mates/mio/idle.png",
-    // wallpaper: "/images/wallpapers/mio.png",
 
     tags: {
       행운: 5,
@@ -195,10 +152,6 @@ export const mates: Mate[] = [
     },
 
     moods: ["curious"],
-
-    favoriteMissionCategories: [
-      "discover",
-      "walk",
-    ],
+    favoriteMissionCategories: ["discover", "walk"],
   },
 ];
