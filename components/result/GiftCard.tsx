@@ -11,36 +11,36 @@ interface GiftCardProps {
 
 export default function GiftCard({ mate, wallpaper }: GiftCardProps) {
   return (
-    <div className="h-full rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 flex flex-col">
+    <div className="flex h-full flex-col rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-6">
 
-      <div className="text-center">
+      {/* 상단: 고정 높이 */}
+      <div className="shrink-0 text-center">
+        <div className="text-4xl">🎁</div>
 
-        <div className="text-5xl">
-          🎁
-        </div>
-
-        <p className="mt-4 text-xs tracking-[0.35em] text-orange-500 font-semibold">
+        <p className="mt-2 text-xs tracking-[0.35em] text-orange-500 font-semibold">
           WALLPAPER GIFT
         </p>
 
-        <h2 className="mt-2 text-3xl font-black text-gray-800">
+        <h2 className="mt-1 text-2xl font-black text-gray-800">
           오늘의 선물
         </h2>
-
       </div>
 
-      <div className="mt-8 flex flex-1 items-center justify-center">
+      {/* 중간: 남는 공간을 다 차지하되, 넘치면 알아서 줄어듦 (min-h-0가 핵심) */}
+      <div className="my-4 min-h-0 flex-1">
         {wallpaper ? (
-          <Image
-            src={wallpaper}
-            alt={mate.name}
-            width={250}
-            height={500}
-            priority
-            className="rounded-3xl shadow-xl object-cover"
-          />
+          <div className="relative mx-auto h-full w-full max-w-[220px]">
+            <Image
+              src={wallpaper}
+              alt={mate.name}
+              fill
+              priority
+              sizes="220px"
+              className="rounded-3xl object-cover shadow-xl"
+            />
+          </div>
         ) : (
-          <div className="flex h-[320px] w-[220px] flex-col items-center justify-center rounded-3xl bg-orange-50 text-center px-4">
+          <div className="flex h-full w-full max-w-[220px] mx-auto flex-col items-center justify-center rounded-3xl bg-orange-50 text-center px-4">
             <div className="text-5xl">{mate.emoji}</div>
             <p className="mt-4 font-semibold text-orange-500">
               {mate.name}의 배경화면은
@@ -51,7 +51,8 @@ export default function GiftCard({ mate, wallpaper }: GiftCardProps) {
         )}
       </div>
 
-      <div className="mt-8">
+      {/* 하단: 고정 높이, 항상 화면에 보임 */}
+      <div className="shrink-0">
         {wallpaper ? (
           <DownloadButton
             imageUrl={wallpaper}
