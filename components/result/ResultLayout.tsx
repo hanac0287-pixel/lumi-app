@@ -61,23 +61,27 @@ export default function ResultLayout({ result }: ResultLayoutProps) {
         <Header onSave={handleSave} onBack={() => (window.location.href = "/")} />
       </div>
 
-      <Swiper
-        modules={[Pagination]}
-        pagination={{ clickable: true }}
-        slidesPerView={1}
-        spaceBetween={0}
-        className="lumi-result-swiper min-h-0 flex-1"
-      >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="flex h-full w-full justify-center overflow-y-auto px-5 pb-10 pt-2">
-              <div className="flex h-full w-full max-w-md flex-col justify-center">
-                {slide}
+      <div className="relative min-h-0 flex-1">
+        <Swiper
+          modules={[Pagination]}
+          pagination={{ clickable: true }}
+          slidesPerView={1}
+          spaceBetween={0}
+          observer
+          observeParents
+          className="lumi-result-swiper absolute inset-0"
+        >
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <div className="flex h-full w-full justify-center overflow-y-auto px-5 pb-10 pt-2">
+                <div className="flex h-full w-full max-w-md flex-col justify-center">
+                  {slide}
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
 
       {/* Swiper 페이지네이션 점 색상을 브랜드 컬러에 맞춤 */}
       <style jsx global>{`
