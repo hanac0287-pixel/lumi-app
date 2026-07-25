@@ -1,35 +1,48 @@
 
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { questions } from "../data/questions";
+import { questions as questionBank, Question } from "../data/questions";
 import { recommend } from "../lib/recommendation";
+import { shuffle } from "../lib/shuffle";
+
+const QUESTION_COUNT = 5;
 
 export default function UploadPage() {
   const router = useRouter();
 
+  // 매 테스트마다 문제 은행에서 무작위로 몇 개만 뽑아요.
+  // (서버/클라이언트 렌더 결과가 달라지지 않도록 마운트 이후에 뽑습니다.)
+  const [questions, setQuestions] = useState<Question[] | null>(null);
+
   const [current, setCurrent] = useState(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const question = questions[current];
+  useEffect(() => {
+    setQuestions(shuffle(questionBank).slice(0, QUESTION_COUNT));
+  }, []);
+
+  const question = questions?.[current];
   const progress = useMemo(
-    () => Math.round(((current + 1) / questions.length) * 100),
-    [current]
+    () =>
+      questions ? Math.round(((current + 1) / questions.length) * 100) : 0,
+    [current, questions]
   );
 
   const handleSelect = (optionIndex: number) => {
-    const option = question.options[optionIndex];
+    if (!questions) return;
 
+    const option = questions[current].options[optionIndex];
     const nextTags = [...selectedTags, ...option.tags];
 
     if (current === questions.length - 1) {
       const result = recommend(nextTags);
 
-sessionStorage.setItem("result", JSON.stringify(result));
+      sessionStorage.setItem("result", JSON.stringify(result));
 
-router.push("/loading");
-return;
+      router.push("/loading");
+      return;
     }
 
     setSelectedTags(nextTags);
@@ -40,6 +53,14 @@ return;
     if (current === 0) return;
     history.back();
   };
+
+  if (!question) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-orange-50 via-amber-50 to-white">
+        <div className="h-10 w-10 animate-spin rounded-full border-4 border-orange-400 border-t-transparent" />
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-orange-50 via-amber-50 to-white">

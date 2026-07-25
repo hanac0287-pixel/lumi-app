@@ -1,39 +1,137 @@
 "use client";
 
-import HeroCard from "./HeroCard";
-import MoodCard from "./MoodCard";
-import FortuneCard from "./FortuneCard";
-import WallpaperCard from "./WallpaperCard";
+import { useState } from "react";
+import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+
+import { RecommendationResult } from "@/app/lib/recommendation";
+import { pickWallpaper } from "@/app/data/mates";
+import { downloadImage } from "@/app/lib/download";
+import Header from "./Header";
+import LetterCard from "./LetterCard";
+import MissionCard from "./MissionCard";
+import GiftCard from "./GiftCard";
 import ShareCard from "./ShareCard";
 import EndCard from "./EndCard";
 
 interface ResultLayoutProps {
-  result: any;
+  result: RecommendationResult;
 }
 
-export default function ResultLayout({
-  result,
-}: ResultLayoutProps) {
+export default function ResultLayout({ result }: ResultLayoutProps) {
+  const { mate, mission, intro, insight, missionIntro } = result;
+
+  // 메이트당 배경화면이 여러 장일 수 있으니, 이번 결과에서 보여줄 한 장을
+  // 세션 동안 고정되도록 한 번만 랜덤으로 뽑아요.
+  const [wallpaper] = useState(() => pickWallpaper(mate));
+
+  const handleSave = async () => {
+    if (!wallpaper) {
+      alert(`${mate.name}의 배경화면은 아직 준비 중이에요.`);
+      return;
+    }
+
+    try {
+      await downloadImage(wallpaper, `LUMI-${mate.id}.png`);
+    } catch (e) {
+      console.error(e);
+      alert("다운로드에 실패했습니다.");
+    }
+  };
+
+  const slides = [
+    <MateIntroSlide key="intro" mate={mate} />,
+    <LetterCard key="letter" mate={mate} intro={intro} insight={insight} />,
+    <MissionCard
+      key="mission"
+      missionIntro={missionIntro}
+      mission={mission}
+    />,
+    <GiftCard key="gift" mate={mate} wallpaper={wallpaper} />,
+    <ShareCard key="share" />,
+    <EndCard key="end" />,
+  ];
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-sky-100 via-white to-blue-50">
+    <div className="flex h-[100dvh] w-full flex-col overflow-hidden bg-gradient-to-b from-orange-50 via-amber-50 to-white">
+      <div className="mx-auto w-full max-w-md px-5">
+        <Header onSave={handleSave} onBack={() => (window.location.href = "/")} />
+      </div>
 
-      {/* 컨텐츠 */}
-      <section className="mx-auto max-w-md px-5 py-8 space-y-8">
+      <Swiper
+        modules={[Pagination]}
+        pagination={{ clickable: true }}
+        slidesPerView={1}
+        spaceBetween={0}
+        className="lumi-result-swiper min-h-0 flex-1"
+      >
+        {slides.map((slide, index) => (
+          <SwiperSlide key={index}>
+            <div className="flex h-full w-full justify-center overflow-y-auto px-5 pb-10 pt-2">
+              <div className="flex h-full w-full max-w-md flex-col justify-center">
+                {slide}
+              </div>
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-        <HeroCard result={result} />
+      {/* Swiper 페이지네이션 점 색상을 브랜드 컬러에 맞춤 */}
+      <style jsx global>{`
+        .lumi-result-swiper .swiper-pagination-bullet {
+          background: #f97316;
+          opacity: 0.3;
+        }
+        .lumi-result-swiper .swiper-pagination-bullet-active {
+          opacity: 1;
+        }
+        .lumi-result-swiper .swiper-pagination {
+          bottom: 4px !important;
+        }
+      `}</style>
+    </div>
+  );
+}
 
-        <MoodCard mood={result.mood} />
+function MateIntroSlide({ mate }: { mate: RecommendationResult["mate"] }) {
+  return (
+    <div className="flex h-full flex-col justify-center rounded-[34px] bg-white/90 backdrop-blur-xl shadow-2xl p-8 text-center">
+      {mate.image ? (
+        <div className="relative mx-auto h-40 w-40">
+          <Image
+            src={mate.image}
+            alt={mate.name}
+            fill
+            priority
+            className="object-contain drop-shadow-xl"
+          />
+        </div>
+      ) : (
+        <div className="text-7xl">{mate.emoji}</div>
+      )}
 
-        <FortuneCard fortune={result.fortune} />
+      <p className="mt-5 text-xs tracking-[0.3em] uppercase text-orange-400 font-semibold">
+        오늘의 메이트
+      </p>
 
-        <WallpaperCard wallpaper={result.wallpaper} />
+      <h1 className="mt-2 text-3xl font-black text-gray-800">
+        {mate.name}
+      </h1>
 
-        <ShareCard />
+      <p className="mt-2 text-lg font-bold text-orange-500">
+        {mate.title}
+      </p>
 
-        <EndCard />
+      <p className="mt-3 leading-7 text-gray-500">
+        {mate.description}
+      </p>
 
-      </section>
-
-    </main>
+      <p className="mt-8 text-sm text-gray-400">
+        좌우로 넘겨서 계속 보기 →
+      </p>
+    </div>
   );
 }
