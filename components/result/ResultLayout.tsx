@@ -72,7 +72,14 @@ export default function ResultLayout({ result }: ResultLayoutProps) {
           spaceBetween={0}
           observer
           observeParents
-          className="lumi-result-swiper absolute inset-0"
+          className="lumi-result-swiper"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          }}
         >
           {slides.map((slide, index) => (
             <SwiperSlide key={index}>
