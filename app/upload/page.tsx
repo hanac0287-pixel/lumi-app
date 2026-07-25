@@ -20,7 +20,10 @@ export default function UploadPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
-    setQuestions(shuffle(questionBank).slice(0, QUESTION_COUNT));
+    const picked = shuffle(questionBank).slice(0, QUESTION_COUNT);
+    console.log("문제 은행 총 개수:", questionBank.length); // 12가 나와야 정상
+    console.log("이번에 뽑힌 질문:", picked.map(q => q.id));
+    setQuestions(picked);
   }, []);
 
   const question = questions?.[current];
